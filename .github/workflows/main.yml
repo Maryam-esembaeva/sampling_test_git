@@ -1,0 +1,24 @@
+name: Run Notebook
+on:
+  workflow_dispatch: # Позволяет запускать вручную
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install nbconvert ipykernel papermill
+          # Добавьте библиотеки, если они нужны вашему коду (например: pip install pandas)
+
+      - name: Execute Notebook
+        run: |
+          papermill sampl_fl.ipynb output.ipynb
